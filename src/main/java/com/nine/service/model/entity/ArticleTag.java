@@ -1,17 +1,21 @@
 package com.nine.service.model.entity;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.CollectionUtils;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.LinkedList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,10 +27,15 @@ import javax.persistence.Table;
 public class ArticleTag extends AbstractPersistent{
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "articleId", referencedColumnName = "id", nullable = false)
-	@Setter(AccessLevel.NONE)
-	private Article article;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name="article_tag_article",
+			joinColumns = { @JoinColumn(name = "article_id") },
+			inverseJoinColumns = { @JoinColumn(name = "article_tag_id") })
+	private List<Article> articles;
+
+	public ArticleTag(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
@@ -36,11 +45,21 @@ public class ArticleTag extends AbstractPersistent{
 		this.name = name;
 	}
 
-	public void setArticle(Article article) {
-		if (article == null || (this.article != null && (article == this.article || this.article.getId() != null && article.getId() != null && this.article.getId().equals(article.getId())))) {
+	public void addArticle(Article article) {
+		if (article == null) {
+			throw new IllegalArgumentException("Attempting to add null article");
+		}
+
+		if (CollectionUtils.isEmpty(articles)) {
+			this.articles = new LinkedList<>();
+		}
+
+		if(isCollectionContainsEntity(this.articles, article)){
 			return;
 		}
-		this.article = article;
-		this.article.addTag(this);
+
+		this.articles.add(article);
+		article.addTag(this);
 	}
+
 }

@@ -15,15 +15,14 @@ public interface ArticleMapper {
 
 	ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
 
-
 	@Mappings({
 			@Mapping(target = "tags", ignore = true),
 			@Mapping(target = "date", ignore = true)
 	})
-	Article articleDtoToArticle(ArticleDtoRequest articleDtoRequest);
+	Article articleDtoRequestToArticle(ArticleDtoRequest articleDtoRequest);
 
 	@Mappings({
 			@Mapping(target = "tags", ignore = true),
 			@Mapping(target = "date", ignore = true)
-	}) ArticleDtoResponse articleToArticleDto(Article article);
+	}) ArticleDtoResponse articleToArticleDtoResponse(Article article);
 }

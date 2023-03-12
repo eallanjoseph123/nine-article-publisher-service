@@ -1,7 +1,5 @@
 package com.nine.service.model.entity;
 
-import io.swagger.v3.oas.models.links.Link;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,22 +32,21 @@ public class Article extends AbstractPersistent{
 	private Date date;
 
 	private String body;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "article")
-	@Setter(AccessLevel.NONE)
+	@ManyToMany(mappedBy="articles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ArticleTag> tags;
 
 	public void addTag(ArticleTag articleTag) {
 		if (articleTag == null) {
-			return;
+			throw new IllegalArgumentException("Attempting to add null articleTag");
 		}
 		if (CollectionUtils.isEmpty(this.tags)) {
 			this.tags = new LinkedList<>();
 		}
-		if (this.tags.stream().anyMatch(tag -> tag.getName().equalsIgnoreCase(articleTag.getName()) || (articleTag.getId() != null && tag.getId() != null && tag.getId().equals(articleTag.getId())))) {
+		if (isCollectionContainsEntity(this.tags, articleTag) ||
+				this.tags.stream().anyMatch(tag -> tag.getName().equalsIgnoreCase(articleTag.getName()) || (articleTag.getId() != null && tag.getId() != null && tag.getId().equals(articleTag.getId())))) {
 			return;
 		}
 		this.tags.add(articleTag);
-		articleTag.setArticle(this);
+		articleTag.addArticle(this);
 	}
 }
