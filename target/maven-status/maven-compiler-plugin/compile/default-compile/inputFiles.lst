@@ -1,0 +1,14 @@
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/repository/ArticleDao.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/mapper/ArticleMapper.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/mapper/ArticleMapperDecorator.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/dto/RelatedArticlesDtoResponse.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/dto/ArticleDtoRequest.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/App.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/entity/AbstractPersistent.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/NineResponse.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/dto/ArticleDtoResponse.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/controller/ArticleController.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/repository/ArticleTagDao.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/entity/ArticleTag.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/model/entity/Article.java
+/home/joseph/development/nine-article-publisher-service/src/main/java/com/nine/service/service/ArticleService.java

@@ -2,7 +2,7 @@ version: "3.7"
 services:
   api_service:
     container_name: nine-article-publisher-service
-    image: eallanjoseph/nine-article-publisher-service
+    image: eallanjoseph/nine-article-publisher-service:v3-release
     build:
       context: .
       dockerfile: Dockerfile
